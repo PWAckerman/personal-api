@@ -4,21 +4,21 @@ Start of the Personal API Project
 
 --------
 
-#### Objectives
-This project will help solidify the concepts of REST, APIs, Node.js and Express. 
+<!-- #### Objectives
+This project will help solidify the concepts of REST, APIs, Node.js and Express.
 
-You're going to build a personal API for your own data. Although the idea might seem silly, the point of the project is to get you used to using Express to return data in an API.
+You're going to build a personal API for your own data. Although the idea might seem silly, the point of the project is to get you used to using Express to return data in an API. -->
 
 #### Step 1: Build your server's core.
-* Start as usual with an `npm init` command to create our `package.json`.
-* Now install your dependencies. We will be using Express and body-parser. Note that you can install multiple dependencies at once with npm: `npm install express body-parser --save`.
-* Require Express and body-parser and initialize your express app.
-* Use body-parser's json method in an `app.use()` method.
+<!-- * Start as usual with an `npm init` command to create our `package.json`. -->
+<!-- * Now install your dependencies. We will be using Express and body-parser. Note that you can install multiple dependencies at once with npm: `npm install express body-parser --save`. -->
+<!-- * Require Express and body-parser and initialize your express app. -->
+<!-- * Use body-parser's json method in an `app.use()` method. -->
 
 #### Step 2: Creating controllers
-In yesterday's projects you might have noticed that our `server.js` file was rapidly becoming very cluttered with our function logic. To get around this and keep a clean `server.js` we're going to create some controllers and move a significant amount of logic into those. Start by creating a `controllers` directory, inside which you will create a `middleware.js` and a `mainCtrl.js`. These are the files in which we write the bulk of our code today. We'll start in `middleware.js`.
+<!-- In yesterday's projects you might have noticed that our `server.js` file was rapidly becoming very cluttered with our function logic. To get around this and keep a clean `server.js` we're going to create some controllers and move a significant amount of logic into those. Start by creating a `controllers` directory, inside which you will create a `middleware.js` and a `mainCtrl.js`. These are the files in which we write the bulk of our code today. We'll start in `middleware.js`. -->
 
-Yesterday we had to write out headers in every single request made and sent; now we get to simplify things! Before we actually start writing our middleware we need a way to get the code from this directory to be accessible to our `server.js`. The way we do this is with `module.exports`. There are two common ways of using `module.exports`, either way will work fine, and which you choose is a matter of preference. Here is an example of each:
+<!-- Yesterday we had to write out headers in every single request made and sent; now we get to simplify things! Before we actually start writing our middleware we need a way to get the code from this directory to be accessible to our `server.js`. The way we do this is with `module.exports`. There are two common ways of using `module.exports`, either way will work fine, and which you choose is a matter of preference. Here is an example of each:
 
 ```javascript
 var exports = module.exports = {}
@@ -42,12 +42,11 @@ module.exports = {
   anotherFunction: function(req, res) {
     /*...*/
   }
-}
-```
+} -->
 
-As you can see we are just creating an object which we will then pull into our `server.js` to have access to the methods we create inside that object. This is similar to dependency injection in Angular, just a different syntax. I'll be using the second style in this project, but as I mentioned, it is just preference and both will function the same.
+<!-- As you can see we are just creating an object which we will then pull into our `server.js` to have access to the methods we create inside that object. This is similar to dependency injection in Angular, just a different syntax. I'll be using the second style in this project, but as I mentioned, it is just preference and both will function the same. -->
 
-Inside of our `middleware.js` controller, let's create a new function that simply adds the headers we used yesterday to a response and then moves on to the next function. This looks a lot like our requests from yesterday, but without a `res.send()`:
+<!-- Inside of our `middleware.js` controller, let's create a new function that simply adds the headers we used yesterday to a response and then moves on to the next function. This looks a lot like our requests from yesterday, but without a `res.send()`:
 
 ```javascript
 module.exports = {
@@ -66,72 +65,71 @@ module.exports = {
     next();
   }
 }
-```
+``` -->
 
-You should also notice that we passed in a new parameter: `next`. What `next` does when invoked is simply pass the request along to the next function in line. Without `next()` or a `res.send()` our request will simply sit on our server and eventually time out. Let's head back to our `server.js` file and set up our controllers.
+<!-- You should also notice that we passed in a new parameter: `next`. What `next` does when invoked is simply pass the request along to the next function in line. Without `next()` or a `res.send()` our request will simply sit on our server and eventually time out. Let's head back to our `server.js` file and set up our controllers. -->
 
-To have access to the code inside these controllers we will need to `require` much like we do with node modules. For these requires we need to provide a file path, which will look like this:
+<!-- To have access to the code inside these controllers we will need to `require` much like we do with node modules. For these requires we need to provide a file path, which will look like this:
 
 ```javascript
 var middleware = require('./controllers/middleware.js');
 var mainCtrl = require('./controllers/mainCtrl.js');
-```
+``` -->
 
-Now we can access any methods that we put inside of our `mainCtrl` or `middleware` objects with dot notation. We'll demonstrate by setting our middleware function to be used on every request. Remember your code from setting up body-parser, we will be doing the same thing with our own custom middleware.
+<!-- Now we can access any methods that we put inside of our `mainCtrl` or `middleware` objects with dot notation. We'll demonstrate by setting our middleware function to be used on every request. Remember your code from setting up body-parser, we will be doing the same thing with our own custom middleware.
 
 ```javascript
 app.use(middleware.addHeaders);
 ```
 
-As simple as that, we no longer have to individually apply headers to every single endpoint! Remember that the `app.use()` method just applies a function to every request made before passing it on to the next function or eventually sending a response.
-
-#### Step 3: Build read-only endpoints
+As simple as that, we no longer have to individually apply headers to every single endpoint! Remember that the `app.use()` method just applies a function to every request made before passing it on to the next function or eventually sending a response. -->
+<!-- #### Step 3: Build read-only endpoints
 * These endpoints will return data (see below)
 * These endpoints should only be accessible with a GET request (read-only)
 * These endpoints will call functions from your controller rather than having them declared inside of the endpoint. i.e `app.get('/name', mainCtrl.getName)` rather than `app.get('/name', function(req, res) { /*...*/});`
 
 ###### `GET /name`
-- returns: Your name (e.g. Joe Sandwiches) in a JSON object: 
+- returns: Your name (e.g. Joe Sandwiches) in a JSON object:
 `{ "name": "Donald Duck" }`
 
 ###### `GET /location`
-- returns: Your location (e.g. Seattle, WA) in a JSON object: 
+- returns: Your location (e.g. Seattle, WA) in a JSON object:
 `{ "location": "Timbuktu" }`
 
 ###### `GET /occupations`
-- returns: Your past occupations as an array in a JSON object: 
+- returns: Your past occupations as an array in a JSON object:
 `{ "occupations": ["Thwarting Buggs Bunny", "Tomfoolery"] }`
 
 ###### `GET /occupations/latest`
-- returns: The last/current job you have/had. The occupations will be stored in an array, but this method returns the last item of the array in a JSON reponse: 
+- returns: The last/current job you have/had. The occupations will be stored in an array, but this method returns the last item of the array in a JSON reponse:
 `{ "latestOccupation": "Tomfoolery" }`
 
 ###### `GET /hobbies`
-- returns: Your hobbies (e.g. Fishing, Swimming, etc.) as an array of objects in a JSON object: 
-```javascript
-{ hobbies: [{
-    "name": "Watching cartoons",
-    "type": "current"
-    },
-    {
-    "name": "Quacking",
-    "type": "past"
-    }
-    ]
-}
-```
+- returns: Your hobbies (e.g. Fishing, Swimming, etc.) as an array of objects in a JSON object: -->
+<!-- ```javascript
+  { hobbies: [{
+      "name": "Watching cartoons",
+      "type": "current"
+      },
+      {
+      "name": "Quacking",
+      "type": "past"
+      }
+      ]
+  }
+``` -->
 
-###### `GET /hobbies/:type`
-- returns: Any hobbies that match the type property specified in the request parameter
+<!-- ###### `GET /hobbies/:type`
+- returns: Any hobbies that match the type property specified in the request parameter -->
 
-#### Step 4: Add ordering to your API
+<!-- #### Step 4: Add ordering to your API
 For the occupations endpoint, let's have a way for the client to get a specific ordering, alphabetized or reverse alphabetized.
-* Make it so when the client requests occupations with a order query parameter, return an alphabetized list for `order=desc` and a reverse alphabetized list for `order=asc` (if your occupations endpoints are arrays of strings, you can simply use the Javascript `.sort()` and `.reverse()` methods of an array to do your sorting).
+* Make it so when the client requests occupations with a order query parameter, return an alphabetized list for `order=desc` and a reverse alphabetized list for `order=asc` (if your occupations endpoints are arrays of strings, you can simply use the Javascript `.sort()` and `.reverse()` methods of an array to do your sorting). -->
 
 #### Step 5: Make writable endpoints
 Now you're going to make some endpoints that can be added to or modified by `POST` or `PUT` requests.
 
-###### `PUT /name`
+<!-- ###### `PUT /name`
 - Changes your name
 
 ###### `PUT /location`
@@ -141,9 +139,9 @@ Now you're going to make some endpoints that can be added to or modified by `POS
 - Adds to your list of hobbies.
 
 ###### `POST /occupations`
-- Adds to your list of occupations.
+- Adds to your list of occupations. -->
 
-#### Step 6: Create skills endpoint
+<!-- #### Step 6: Create skills endpoint
 This endpoint is going to be a bit more complicated than those you've made previously. For skills, we need to store a more complicated data structure. Here's how your skill could be structured:
 
 ```javascript
@@ -152,17 +150,17 @@ This endpoint is going to be a bit more complicated than those you've made previ
   "name": "Javascript",
   "experience": "Intermediate"
 }
-```
+``` -->
 
-* In your server code, make an array that holds all of your skills. Be sure to define the array outside of the `app.get` or `app.post` methods, as it needs to persist (scope) outside of those methods and maintain its data. The array will hold 'skill' objects like the example above.
-* Create the endpoint
+<!-- * In your server code, make an array that holds all of your skills. Be sure to define the array outside of the `app.get` or `app.post` methods, as it needs to persist (scope) outside of those methods and maintain its data. The array will hold 'skill' objects like the example above.
+* Create the endpoint -->
 
-###### `GET /skillz`
+<!-- ###### `GET /skillz`
 - Retrieve the list of skills
 
 - Also, allow an 'experience' query parameter so that someone can retrieve a list of skills that match a certain level of experience, like so:
 
-`GET /skillz?experience=Intermediate`
+`GET /skillz?experience=Intermediate` -->
 
 ###### `POST /skillz`
 - Add a skill to the collection of skills. For this endpoint let's create some middleware that will dynamically create IDs for us based on array length. This function will go inside of our `middleware.js` file. Because we only want to use this middleware on our skillz 'POST' endpoint we don't want to use the `app.use()` method; instead we want to pass it into our endpoint's arguments, like so:
